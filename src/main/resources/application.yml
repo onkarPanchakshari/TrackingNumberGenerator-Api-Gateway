@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: tracking_route
+          uri: https://trackingnumbergenerator-api.onrender.com
+          predicates:
+            - Path=/api/next-tracking-number
+          filters:
+            - RewritePath=/api/next-tracking-number,/api/next-tracking-number
+        - id: notification_route
+          uri: http://localhost:8080
+          predicates:
+              - Path=/notify/**
+          filters:
+              - RewritePath=/notify, /notify
